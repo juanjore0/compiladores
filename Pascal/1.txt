@@ -14,3 +14,23 @@ begin
    writeln('Description: ', description);
    writeln('Value of i = ', i);
 end.
+
+
+/ERRORES
+
+program exMemory
+var
+   name string;
+   description: string;
+   i: integer;
+
+begin
+   name := 'Zara Ali';
+   i := 10;
+
+   description := 'Zara Ali'
+
+   writeln('Name = ', name);
+   writeln('Description: ', description)
+   writeln('Value of i = ', i);
+end

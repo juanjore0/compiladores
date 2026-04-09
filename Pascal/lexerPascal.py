@@ -4,7 +4,8 @@ tokens = (
 
     # --- Palabras Reservadas ---
     'PROGRAM', 'VAR', 'BEGIN', 'END', 'IF', 'THEN', 'ELSE', 
-    'WHILE', 'DO', 'INTEGER', 'REAL', 'BOOLEAN', 'READ', 'WRITE',
+    'WHILE', 'DO', 'INTEGER', 'REAL', 'BOOLEAN', 'READ', 'WRITE', 
+    'STRING', 'WRITELN', 'ARRAY', 'OF', 'NEW', 'NOT',
 
     # --- Operadores Matemáticos y Lógicos ---
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE',        
@@ -12,19 +13,20 @@ tokens = (
     'LESS', 'LESSEQUAL', 'GREATER', 'GREATEREQUAL', 
     
     # --- Símbolos de Puntuación y Agrupación ---
-    'SEMICOLON', 'COLON', 'COMMA', 'DOT',      
-    'LPAREN', 'RPAREN',                        
+    'SEMICOLON', 'COLON', 'COMMA', 'DOT', 'DOTDOT',      
+    'LPAREN', 'RPAREN', 'LBRACKET', 'RBRACKET',                        
     
     'ID',       
     'NUMBER',
-    'STRING', 
+    'STRLIT',
 )
 
 reservadas = {
     'program': 'PROGRAM', 'var': 'VAR', 'begin': 'BEGIN', 'end': 'END',
     'if': 'IF', 'then': 'THEN', 'else': 'ELSE', 'while': 'WHILE', 'do': 'DO',
-    'integer': 'INTEGER', 'real': 'REAL', 'boolean': 'BOOLEAN',
-    'read': 'READ', 'write': 'WRITE'
+    'integer': 'INTEGER', 'real': 'REAL', 'boolean': 'BOOLEAN', 'string': 'STRING',
+    'read': 'READ', 'write': 'WRITE', 'writeln': 'WRITELN',
+    'array': 'ARRAY', 'of': 'OF', 'new': 'NEW', 'not': 'NOT'
 }
 
 # Tokens Estaticos
@@ -43,9 +45,12 @@ t_GREATEREQUAL = r'>='
 t_SEMICOLON    = r';'
 t_COLON        = r':'
 t_COMMA        = r','
+t_DOTDOT       = r'\.\.'
 t_DOT          = r'\.'
 t_LPAREN       = r'\('
 t_RPAREN       = r'\)'
+t_LBRACKET     = r'\['
+t_RBRACKET     = r'\]'
 
 # Tokens Dinámicos
 
@@ -85,7 +90,7 @@ def t_ID(t):
     return t
 
 def t_NUMBER_MALFORMED(t):
-    r'\d+\.(?!\d)'
+    r'\d+\.(?![\d.])'
     print(f"Error léxico: número mal formado '{t.value}' en línea {t.lexer.lineno} (falta parte decimal)")
     t.lexer.skip(len(t.value))
 
@@ -97,9 +102,10 @@ def t_NUMBER(t):
         t.value = int(t.value)
     return t
 
-def t_STRING(t):
+def t_STRLIT(t):
     r'\'[^\']*\''
     t.value = t.value[1:-1]
+    t.type = 'STRLIT'
     return t
 
 t_ignore = ' \t'
@@ -114,7 +120,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-with open('evaluacion.txt', 'r') as file:
+with open('Pascal\\pascal.txt', 'r') as file:
         data = file.read()
         
 print("----- Código Fuente Leído -----")

@@ -1,0 +1,2372 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM ID SEMICOLON var_section BEGIN statements END DOT
+Rule 2     var_section -> VAR var_declarations
+Rule 3     var_section -> empty
+Rule 4     var_declarations -> var_declarations var_decl
+Rule 5     var_declarations -> var_decl
+Rule 6     var_decl -> id_list COLON type SEMICOLON
+Rule 7     id_list -> id_list COMMA ID
+Rule 8     id_list -> ID
+Rule 9     type -> INTEGER
+Rule 10    type -> REAL
+Rule 11    type -> BOOLEAN
+Rule 12    type -> STRING
+Rule 13    type -> ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF type
+Rule 14    statements -> statements SEMICOLON statement
+Rule 15    statements -> statements SEMICOLON
+Rule 16    statements -> statement
+Rule 17    statements -> empty
+Rule 18    statement -> assignment
+Rule 19    statement -> if_statement
+Rule 20    statement -> while_statement
+Rule 21    statement -> read_statement
+Rule 22    statement -> write_statement
+Rule 23    statement -> writeln_statement
+Rule 24    assignment -> ID ASSIGN expression
+Rule 25    if_statement -> IF expression THEN statement
+Rule 26    if_statement -> IF expression THEN statement ELSE statement
+Rule 27    while_statement -> WHILE expression DO statement
+Rule 28    read_statement -> READ LPAREN id_list RPAREN
+Rule 29    write_statement -> WRITE LPAREN expr_list RPAREN
+Rule 30    writeln_statement -> WRITELN LPAREN expr_list RPAREN
+Rule 31    writeln_statement -> WRITELN LPAREN RPAREN
+Rule 32    expr_list -> expr_list COMMA expression
+Rule 33    expr_list -> expression
+Rule 34    expression -> expression PLUS expression
+Rule 35    expression -> expression MINUS expression
+Rule 36    expression -> expression TIMES expression
+Rule 37    expression -> expression DIVIDE expression
+Rule 38    expression -> expression EQUAL expression
+Rule 39    expression -> expression NOTEQ expression
+Rule 40    expression -> expression LESS expression
+Rule 41    expression -> expression LESSEQUAL expression
+Rule 42    expression -> expression GREATER expression
+Rule 43    expression -> expression GREATEREQUAL expression
+Rule 44    expression -> MINUS expression
+Rule 45    expression -> NOT expression
+Rule 46    expression -> LPAREN expression RPAREN
+Rule 47    expression -> ID
+Rule 48    expression -> NUMBER
+Rule 49    expression -> STRLIT
+Rule 50    expression -> NEW LPAREN ID RPAREN
+Rule 51    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ARRAY                : 13
+ASSIGN               : 24
+BEGIN                : 1
+BOOLEAN              : 11
+COLON                : 6
+COMMA                : 7 32
+DIVIDE               : 37
+DO                   : 27
+DOT                  : 1
+DOTDOT               : 13
+ELSE                 : 26
+END                  : 1
+EQUAL                : 38
+GREATER              : 42
+GREATEREQUAL         : 43
+ID                   : 1 7 8 24 47 50
+IF                   : 25 26
+INTEGER              : 9
+LBRACKET             : 13
+LESS                 : 40
+LESSEQUAL            : 41
+LPAREN               : 28 29 30 31 46 50
+MINUS                : 35 44
+NEW                  : 50
+NOT                  : 45
+NOTEQ                : 39
+NUMBER               : 13 13 48
+OF                   : 13
+PLUS                 : 34
+PROGRAM              : 1
+RBRACKET             : 13
+READ                 : 28
+REAL                 : 10
+RPAREN               : 28 29 30 31 46 50
+SEMICOLON            : 1 6 14 15
+STRING               : 12
+STRLIT               : 49
+THEN                 : 25 26
+TIMES                : 36
+VAR                  : 2
+WHILE                : 27
+WRITE                : 29
+WRITELN              : 30 31
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 18
+empty                : 3 17
+expr_list            : 29 30 32
+expression           : 24 25 26 27 32 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 45 46
+id_list              : 6 7 28
+if_statement         : 19
+program              : 0
+read_statement       : 21
+statement            : 14 16 25 26 26 27
+statements           : 1 14 15
+type                 : 6 13
+var_decl             : 4 5
+var_declarations     : 2 4
+var_section          : 1
+while_statement      : 20
+write_statement      : 22
+writeln_statement    : 23
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM ID SEMICOLON var_section BEGIN statements END DOT
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . ID SEMICOLON var_section BEGIN statements END DOT
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM ID . SEMICOLON var_section BEGIN statements END DOT
+
+    SEMICOLON       shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM ID SEMICOLON . var_section BEGIN statements END DOT
+    (2) var_section -> . VAR var_declarations
+    (3) var_section -> . empty
+    (51) empty -> .
+
+    VAR             shift and go to state 6
+    BEGIN           reduce using rule 51 (empty -> .)
+
+    var_section                    shift and go to state 5
+    empty                          shift and go to state 7
+
+state 5
+
+    (1) program -> PROGRAM ID SEMICOLON var_section . BEGIN statements END DOT
+
+    BEGIN           shift and go to state 8
+
+
+state 6
+
+    (2) var_section -> VAR . var_declarations
+    (4) var_declarations -> . var_declarations var_decl
+    (5) var_declarations -> . var_decl
+    (6) var_decl -> . id_list COLON type SEMICOLON
+    (7) id_list -> . id_list COMMA ID
+    (8) id_list -> . ID
+
+    ID              shift and go to state 12
+
+    var_declarations               shift and go to state 9
+    var_decl                       shift and go to state 10
+    id_list                        shift and go to state 11
+
+state 7
+
+    (3) var_section -> empty .
+
+    BEGIN           reduce using rule 3 (var_section -> empty .)
+
+
+state 8
+
+    (1) program -> PROGRAM ID SEMICOLON var_section BEGIN . statements END DOT
+    (14) statements -> . statements SEMICOLON statement
+    (15) statements -> . statements SEMICOLON
+    (16) statements -> . statement
+    (17) statements -> . empty
+    (18) statement -> . assignment
+    (19) statement -> . if_statement
+    (20) statement -> . while_statement
+    (21) statement -> . read_statement
+    (22) statement -> . write_statement
+    (23) statement -> . writeln_statement
+    (51) empty -> .
+    (24) assignment -> . ID ASSIGN expression
+    (25) if_statement -> . IF expression THEN statement
+    (26) if_statement -> . IF expression THEN statement ELSE statement
+    (27) while_statement -> . WHILE expression DO statement
+    (28) read_statement -> . READ LPAREN id_list RPAREN
+    (29) write_statement -> . WRITE LPAREN expr_list RPAREN
+    (30) writeln_statement -> . WRITELN LPAREN expr_list RPAREN
+    (31) writeln_statement -> . WRITELN LPAREN RPAREN
+
+    END             reduce using rule 51 (empty -> .)
+    SEMICOLON       reduce using rule 51 (empty -> .)
+    ID              shift and go to state 13
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
+    READ            shift and go to state 25
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 27
+
+    statements                     shift and go to state 14
+    statement                      shift and go to state 15
+    empty                          shift and go to state 16
+    assignment                     shift and go to state 17
+    if_statement                   shift and go to state 18
+    while_statement                shift and go to state 19
+    read_statement                 shift and go to state 20
+    write_statement                shift and go to state 21
+    writeln_statement              shift and go to state 22
+
+state 9
+
+    (2) var_section -> VAR var_declarations .
+    (4) var_declarations -> var_declarations . var_decl
+    (6) var_decl -> . id_list COLON type SEMICOLON
+    (7) id_list -> . id_list COMMA ID
+    (8) id_list -> . ID
+
+    BEGIN           reduce using rule 2 (var_section -> VAR var_declarations .)
+    ID              shift and go to state 12
+
+    var_decl                       shift and go to state 28
+    id_list                        shift and go to state 11
+
+state 10
+
+    (5) var_declarations -> var_decl .
+
+    ID              reduce using rule 5 (var_declarations -> var_decl .)
+    BEGIN           reduce using rule 5 (var_declarations -> var_decl .)
+
+
+state 11
+
+    (6) var_decl -> id_list . COLON type SEMICOLON
+    (7) id_list -> id_list . COMMA ID
+
+    COLON           shift and go to state 29
+    COMMA           shift and go to state 30
+
+
+state 12
+
+    (8) id_list -> ID .
+
+    COLON           reduce using rule 8 (id_list -> ID .)
+    COMMA           reduce using rule 8 (id_list -> ID .)
+    RPAREN          reduce using rule 8 (id_list -> ID .)
+
+
+state 13
+
+    (24) assignment -> ID . ASSIGN expression
+
+    ASSIGN          shift and go to state 31
+
+
+state 14
+
+    (1) program -> PROGRAM ID SEMICOLON var_section BEGIN statements . END DOT
+    (14) statements -> statements . SEMICOLON statement
+    (15) statements -> statements . SEMICOLON
+
+    END             shift and go to state 33
+    SEMICOLON       shift and go to state 32
+
+
+state 15
+
+    (16) statements -> statement .
+
+    END             reduce using rule 16 (statements -> statement .)
+    SEMICOLON       reduce using rule 16 (statements -> statement .)
+
+
+state 16
+
+    (17) statements -> empty .
+
+    END             reduce using rule 17 (statements -> empty .)
+    SEMICOLON       reduce using rule 17 (statements -> empty .)
+
+
+state 17
+
+    (18) statement -> assignment .
+
+    END             reduce using rule 18 (statement -> assignment .)
+    SEMICOLON       reduce using rule 18 (statement -> assignment .)
+    ELSE            reduce using rule 18 (statement -> assignment .)
+
+
+state 18
+
+    (19) statement -> if_statement .
+
+    END             reduce using rule 19 (statement -> if_statement .)
+    SEMICOLON       reduce using rule 19 (statement -> if_statement .)
+    ELSE            reduce using rule 19 (statement -> if_statement .)
+
+
+state 19
+
+    (20) statement -> while_statement .
+
+    END             reduce using rule 20 (statement -> while_statement .)
+    SEMICOLON       reduce using rule 20 (statement -> while_statement .)
+    ELSE            reduce using rule 20 (statement -> while_statement .)
+
+
+state 20
+
+    (21) statement -> read_statement .
+
+    END             reduce using rule 21 (statement -> read_statement .)
+    SEMICOLON       reduce using rule 21 (statement -> read_statement .)
+    ELSE            reduce using rule 21 (statement -> read_statement .)
+
+
+state 21
+
+    (22) statement -> write_statement .
+
+    END             reduce using rule 22 (statement -> write_statement .)
+    SEMICOLON       reduce using rule 22 (statement -> write_statement .)
+    ELSE            reduce using rule 22 (statement -> write_statement .)
+
+
+state 22
+
+    (23) statement -> writeln_statement .
+
+    END             reduce using rule 23 (statement -> writeln_statement .)
+    SEMICOLON       reduce using rule 23 (statement -> writeln_statement .)
+    ELSE            reduce using rule 23 (statement -> writeln_statement .)
+
+
+state 23
+
+    (25) if_statement -> IF . expression THEN statement
+    (26) if_statement -> IF . expression THEN statement ELSE statement
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 34
+
+state 24
+
+    (27) while_statement -> WHILE . expression DO statement
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 42
+
+state 25
+
+    (28) read_statement -> READ . LPAREN id_list RPAREN
+
+    LPAREN          shift and go to state 43
+
+
+state 26
+
+    (29) write_statement -> WRITE . LPAREN expr_list RPAREN
+
+    LPAREN          shift and go to state 44
+
+
+state 27
+
+    (30) writeln_statement -> WRITELN . LPAREN expr_list RPAREN
+    (31) writeln_statement -> WRITELN . LPAREN RPAREN
+
+    LPAREN          shift and go to state 45
+
+
+state 28
+
+    (4) var_declarations -> var_declarations var_decl .
+
+    ID              reduce using rule 4 (var_declarations -> var_declarations var_decl .)
+    BEGIN           reduce using rule 4 (var_declarations -> var_declarations var_decl .)
+
+
+state 29
+
+    (6) var_decl -> id_list COLON . type SEMICOLON
+    (9) type -> . INTEGER
+    (10) type -> . REAL
+    (11) type -> . BOOLEAN
+    (12) type -> . STRING
+    (13) type -> . ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF type
+
+    INTEGER         shift and go to state 47
+    REAL            shift and go to state 48
+    BOOLEAN         shift and go to state 49
+    STRING          shift and go to state 50
+    ARRAY           shift and go to state 51
+
+    type                           shift and go to state 46
+
+state 30
+
+    (7) id_list -> id_list COMMA . ID
+
+    ID              shift and go to state 52
+
+
+state 31
+
+    (24) assignment -> ID ASSIGN . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 53
+
+state 32
+
+    (14) statements -> statements SEMICOLON . statement
+    (15) statements -> statements SEMICOLON .
+    (18) statement -> . assignment
+    (19) statement -> . if_statement
+    (20) statement -> . while_statement
+    (21) statement -> . read_statement
+    (22) statement -> . write_statement
+    (23) statement -> . writeln_statement
+    (24) assignment -> . ID ASSIGN expression
+    (25) if_statement -> . IF expression THEN statement
+    (26) if_statement -> . IF expression THEN statement ELSE statement
+    (27) while_statement -> . WHILE expression DO statement
+    (28) read_statement -> . READ LPAREN id_list RPAREN
+    (29) write_statement -> . WRITE LPAREN expr_list RPAREN
+    (30) writeln_statement -> . WRITELN LPAREN expr_list RPAREN
+    (31) writeln_statement -> . WRITELN LPAREN RPAREN
+
+    END             reduce using rule 15 (statements -> statements SEMICOLON .)
+    SEMICOLON       reduce using rule 15 (statements -> statements SEMICOLON .)
+    ID              shift and go to state 13
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
+    READ            shift and go to state 25
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 27
+
+    statement                      shift and go to state 54
+    assignment                     shift and go to state 17
+    if_statement                   shift and go to state 18
+    while_statement                shift and go to state 19
+    read_statement                 shift and go to state 20
+    write_statement                shift and go to state 21
+    writeln_statement              shift and go to state 22
+
+state 33
+
+    (1) program -> PROGRAM ID SEMICOLON var_section BEGIN statements END . DOT
+
+    DOT             shift and go to state 55
+
+
+state 34
+
+    (25) if_statement -> IF expression . THEN statement
+    (26) if_statement -> IF expression . THEN statement ELSE statement
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    THEN            shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+
+state 35
+
+    (44) expression -> MINUS . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 67
+
+state 36
+
+    (45) expression -> NOT . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 68
+
+state 37
+
+    (46) expression -> LPAREN . expression RPAREN
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 69
+
+state 38
+
+    (47) expression -> ID .
+
+    THEN            reduce using rule 47 (expression -> ID .)
+    PLUS            reduce using rule 47 (expression -> ID .)
+    MINUS           reduce using rule 47 (expression -> ID .)
+    TIMES           reduce using rule 47 (expression -> ID .)
+    DIVIDE          reduce using rule 47 (expression -> ID .)
+    EQUAL           reduce using rule 47 (expression -> ID .)
+    NOTEQ           reduce using rule 47 (expression -> ID .)
+    LESS            reduce using rule 47 (expression -> ID .)
+    LESSEQUAL       reduce using rule 47 (expression -> ID .)
+    GREATER         reduce using rule 47 (expression -> ID .)
+    GREATEREQUAL    reduce using rule 47 (expression -> ID .)
+    DO              reduce using rule 47 (expression -> ID .)
+    END             reduce using rule 47 (expression -> ID .)
+    SEMICOLON       reduce using rule 47 (expression -> ID .)
+    ELSE            reduce using rule 47 (expression -> ID .)
+    RPAREN          reduce using rule 47 (expression -> ID .)
+    COMMA           reduce using rule 47 (expression -> ID .)
+
+
+state 39
+
+    (48) expression -> NUMBER .
+
+    THEN            reduce using rule 48 (expression -> NUMBER .)
+    PLUS            reduce using rule 48 (expression -> NUMBER .)
+    MINUS           reduce using rule 48 (expression -> NUMBER .)
+    TIMES           reduce using rule 48 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 48 (expression -> NUMBER .)
+    EQUAL           reduce using rule 48 (expression -> NUMBER .)
+    NOTEQ           reduce using rule 48 (expression -> NUMBER .)
+    LESS            reduce using rule 48 (expression -> NUMBER .)
+    LESSEQUAL       reduce using rule 48 (expression -> NUMBER .)
+    GREATER         reduce using rule 48 (expression -> NUMBER .)
+    GREATEREQUAL    reduce using rule 48 (expression -> NUMBER .)
+    DO              reduce using rule 48 (expression -> NUMBER .)
+    END             reduce using rule 48 (expression -> NUMBER .)
+    SEMICOLON       reduce using rule 48 (expression -> NUMBER .)
+    ELSE            reduce using rule 48 (expression -> NUMBER .)
+    RPAREN          reduce using rule 48 (expression -> NUMBER .)
+    COMMA           reduce using rule 48 (expression -> NUMBER .)
+
+
+state 40
+
+    (49) expression -> STRLIT .
+
+    THEN            reduce using rule 49 (expression -> STRLIT .)
+    PLUS            reduce using rule 49 (expression -> STRLIT .)
+    MINUS           reduce using rule 49 (expression -> STRLIT .)
+    TIMES           reduce using rule 49 (expression -> STRLIT .)
+    DIVIDE          reduce using rule 49 (expression -> STRLIT .)
+    EQUAL           reduce using rule 49 (expression -> STRLIT .)
+    NOTEQ           reduce using rule 49 (expression -> STRLIT .)
+    LESS            reduce using rule 49 (expression -> STRLIT .)
+    LESSEQUAL       reduce using rule 49 (expression -> STRLIT .)
+    GREATER         reduce using rule 49 (expression -> STRLIT .)
+    GREATEREQUAL    reduce using rule 49 (expression -> STRLIT .)
+    DO              reduce using rule 49 (expression -> STRLIT .)
+    END             reduce using rule 49 (expression -> STRLIT .)
+    SEMICOLON       reduce using rule 49 (expression -> STRLIT .)
+    ELSE            reduce using rule 49 (expression -> STRLIT .)
+    RPAREN          reduce using rule 49 (expression -> STRLIT .)
+    COMMA           reduce using rule 49 (expression -> STRLIT .)
+
+
+state 41
+
+    (50) expression -> NEW . LPAREN ID RPAREN
+
+    LPAREN          shift and go to state 70
+
+
+state 42
+
+    (27) while_statement -> WHILE expression . DO statement
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    DO              shift and go to state 71
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+
+state 43
+
+    (28) read_statement -> READ LPAREN . id_list RPAREN
+    (7) id_list -> . id_list COMMA ID
+    (8) id_list -> . ID
+
+    ID              shift and go to state 12
+
+    id_list                        shift and go to state 72
+
+state 44
+
+    (29) write_statement -> WRITE LPAREN . expr_list RPAREN
+    (32) expr_list -> . expr_list COMMA expression
+    (33) expr_list -> . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expr_list                      shift and go to state 73
+    expression                     shift and go to state 74
+
+state 45
+
+    (30) writeln_statement -> WRITELN LPAREN . expr_list RPAREN
+    (31) writeln_statement -> WRITELN LPAREN . RPAREN
+    (32) expr_list -> . expr_list COMMA expression
+    (33) expr_list -> . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    RPAREN          shift and go to state 76
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expr_list                      shift and go to state 75
+    expression                     shift and go to state 74
+
+state 46
+
+    (6) var_decl -> id_list COLON type . SEMICOLON
+
+    SEMICOLON       shift and go to state 77
+
+
+state 47
+
+    (9) type -> INTEGER .
+
+    SEMICOLON       reduce using rule 9 (type -> INTEGER .)
+
+
+state 48
+
+    (10) type -> REAL .
+
+    SEMICOLON       reduce using rule 10 (type -> REAL .)
+
+
+state 49
+
+    (11) type -> BOOLEAN .
+
+    SEMICOLON       reduce using rule 11 (type -> BOOLEAN .)
+
+
+state 50
+
+    (12) type -> STRING .
+
+    SEMICOLON       reduce using rule 12 (type -> STRING .)
+
+
+state 51
+
+    (13) type -> ARRAY . LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF type
+
+    LBRACKET        shift and go to state 78
+
+
+state 52
+
+    (7) id_list -> id_list COMMA ID .
+
+    COLON           reduce using rule 7 (id_list -> id_list COMMA ID .)
+    COMMA           reduce using rule 7 (id_list -> id_list COMMA ID .)
+    RPAREN          reduce using rule 7 (id_list -> id_list COMMA ID .)
+
+
+state 53
+
+    (24) assignment -> ID ASSIGN expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    END             reduce using rule 24 (assignment -> ID ASSIGN expression .)
+    SEMICOLON       reduce using rule 24 (assignment -> ID ASSIGN expression .)
+    ELSE            reduce using rule 24 (assignment -> ID ASSIGN expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+
+state 54
+
+    (14) statements -> statements SEMICOLON statement .
+
+    END             reduce using rule 14 (statements -> statements SEMICOLON statement .)
+    SEMICOLON       reduce using rule 14 (statements -> statements SEMICOLON statement .)
+
+
+state 55
+
+    (1) program -> PROGRAM ID SEMICOLON var_section BEGIN statements END DOT .
+
+    $end            reduce using rule 1 (program -> PROGRAM ID SEMICOLON var_section BEGIN statements END DOT .)
+
+
+state 56
+
+    (25) if_statement -> IF expression THEN . statement
+    (26) if_statement -> IF expression THEN . statement ELSE statement
+    (18) statement -> . assignment
+    (19) statement -> . if_statement
+    (20) statement -> . while_statement
+    (21) statement -> . read_statement
+    (22) statement -> . write_statement
+    (23) statement -> . writeln_statement
+    (24) assignment -> . ID ASSIGN expression
+    (25) if_statement -> . IF expression THEN statement
+    (26) if_statement -> . IF expression THEN statement ELSE statement
+    (27) while_statement -> . WHILE expression DO statement
+    (28) read_statement -> . READ LPAREN id_list RPAREN
+    (29) write_statement -> . WRITE LPAREN expr_list RPAREN
+    (30) writeln_statement -> . WRITELN LPAREN expr_list RPAREN
+    (31) writeln_statement -> . WRITELN LPAREN RPAREN
+
+    ID              shift and go to state 13
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
+    READ            shift and go to state 25
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 27
+
+    statement                      shift and go to state 79
+    assignment                     shift and go to state 17
+    if_statement                   shift and go to state 18
+    while_statement                shift and go to state 19
+    read_statement                 shift and go to state 20
+    write_statement                shift and go to state 21
+    writeln_statement              shift and go to state 22
+
+state 57
+
+    (34) expression -> expression PLUS . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 80
+
+state 58
+
+    (35) expression -> expression MINUS . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 81
+
+state 59
+
+    (36) expression -> expression TIMES . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 82
+
+state 60
+
+    (37) expression -> expression DIVIDE . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 83
+
+state 61
+
+    (38) expression -> expression EQUAL . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 84
+
+state 62
+
+    (39) expression -> expression NOTEQ . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 85
+
+state 63
+
+    (40) expression -> expression LESS . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 86
+
+state 64
+
+    (41) expression -> expression LESSEQUAL . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 87
+
+state 65
+
+    (42) expression -> expression GREATER . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 88
+
+state 66
+
+    (43) expression -> expression GREATEREQUAL . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 89
+
+state 67
+
+    (44) expression -> MINUS expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    THEN            reduce using rule 44 (expression -> MINUS expression .)
+    PLUS            reduce using rule 44 (expression -> MINUS expression .)
+    MINUS           reduce using rule 44 (expression -> MINUS expression .)
+    TIMES           reduce using rule 44 (expression -> MINUS expression .)
+    DIVIDE          reduce using rule 44 (expression -> MINUS expression .)
+    EQUAL           reduce using rule 44 (expression -> MINUS expression .)
+    NOTEQ           reduce using rule 44 (expression -> MINUS expression .)
+    LESS            reduce using rule 44 (expression -> MINUS expression .)
+    LESSEQUAL       reduce using rule 44 (expression -> MINUS expression .)
+    GREATER         reduce using rule 44 (expression -> MINUS expression .)
+    GREATEREQUAL    reduce using rule 44 (expression -> MINUS expression .)
+    DO              reduce using rule 44 (expression -> MINUS expression .)
+    END             reduce using rule 44 (expression -> MINUS expression .)
+    SEMICOLON       reduce using rule 44 (expression -> MINUS expression .)
+    ELSE            reduce using rule 44 (expression -> MINUS expression .)
+    RPAREN          reduce using rule 44 (expression -> MINUS expression .)
+    COMMA           reduce using rule 44 (expression -> MINUS expression .)
+
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+  ! TIMES           [ shift and go to state 59 ]
+  ! DIVIDE          [ shift and go to state 60 ]
+  ! EQUAL           [ shift and go to state 61 ]
+  ! NOTEQ           [ shift and go to state 62 ]
+  ! LESS            [ shift and go to state 63 ]
+  ! LESSEQUAL       [ shift and go to state 64 ]
+  ! GREATER         [ shift and go to state 65 ]
+  ! GREATEREQUAL    [ shift and go to state 66 ]
+
+
+state 68
+
+    (45) expression -> NOT expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 45 (expression -> NOT expression .)
+    DO              reduce using rule 45 (expression -> NOT expression .)
+    END             reduce using rule 45 (expression -> NOT expression .)
+    SEMICOLON       reduce using rule 45 (expression -> NOT expression .)
+    ELSE            reduce using rule 45 (expression -> NOT expression .)
+    RPAREN          reduce using rule 45 (expression -> NOT expression .)
+    COMMA           reduce using rule 45 (expression -> NOT expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! MINUS           [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! TIMES           [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! DIVIDE          [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! EQUAL           [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! NOTEQ           [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! LESS            [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! LESSEQUAL       [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! GREATER         [ reduce using rule 45 (expression -> NOT expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 45 (expression -> NOT expression .) ]
+
+
+state 69
+
+    (46) expression -> LPAREN expression . RPAREN
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    RPAREN          shift and go to state 90
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+
+state 70
+
+    (50) expression -> NEW LPAREN . ID RPAREN
+
+    ID              shift and go to state 91
+
+
+state 71
+
+    (27) while_statement -> WHILE expression DO . statement
+    (18) statement -> . assignment
+    (19) statement -> . if_statement
+    (20) statement -> . while_statement
+    (21) statement -> . read_statement
+    (22) statement -> . write_statement
+    (23) statement -> . writeln_statement
+    (24) assignment -> . ID ASSIGN expression
+    (25) if_statement -> . IF expression THEN statement
+    (26) if_statement -> . IF expression THEN statement ELSE statement
+    (27) while_statement -> . WHILE expression DO statement
+    (28) read_statement -> . READ LPAREN id_list RPAREN
+    (29) write_statement -> . WRITE LPAREN expr_list RPAREN
+    (30) writeln_statement -> . WRITELN LPAREN expr_list RPAREN
+    (31) writeln_statement -> . WRITELN LPAREN RPAREN
+
+    ID              shift and go to state 13
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
+    READ            shift and go to state 25
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 27
+
+    statement                      shift and go to state 92
+    assignment                     shift and go to state 17
+    if_statement                   shift and go to state 18
+    while_statement                shift and go to state 19
+    read_statement                 shift and go to state 20
+    write_statement                shift and go to state 21
+    writeln_statement              shift and go to state 22
+
+state 72
+
+    (28) read_statement -> READ LPAREN id_list . RPAREN
+    (7) id_list -> id_list . COMMA ID
+
+    RPAREN          shift and go to state 93
+    COMMA           shift and go to state 30
+
+
+state 73
+
+    (29) write_statement -> WRITE LPAREN expr_list . RPAREN
+    (32) expr_list -> expr_list . COMMA expression
+
+    RPAREN          shift and go to state 94
+    COMMA           shift and go to state 95
+
+
+state 74
+
+    (33) expr_list -> expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    RPAREN          reduce using rule 33 (expr_list -> expression .)
+    COMMA           reduce using rule 33 (expr_list -> expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+
+state 75
+
+    (30) writeln_statement -> WRITELN LPAREN expr_list . RPAREN
+    (32) expr_list -> expr_list . COMMA expression
+
+    RPAREN          shift and go to state 96
+    COMMA           shift and go to state 95
+
+
+state 76
+
+    (31) writeln_statement -> WRITELN LPAREN RPAREN .
+
+    END             reduce using rule 31 (writeln_statement -> WRITELN LPAREN RPAREN .)
+    SEMICOLON       reduce using rule 31 (writeln_statement -> WRITELN LPAREN RPAREN .)
+    ELSE            reduce using rule 31 (writeln_statement -> WRITELN LPAREN RPAREN .)
+
+
+state 77
+
+    (6) var_decl -> id_list COLON type SEMICOLON .
+
+    ID              reduce using rule 6 (var_decl -> id_list COLON type SEMICOLON .)
+    BEGIN           reduce using rule 6 (var_decl -> id_list COLON type SEMICOLON .)
+
+
+state 78
+
+    (13) type -> ARRAY LBRACKET . NUMBER DOTDOT NUMBER RBRACKET OF type
+
+    NUMBER          shift and go to state 97
+
+
+state 79
+
+    (25) if_statement -> IF expression THEN statement .
+    (26) if_statement -> IF expression THEN statement . ELSE statement
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    END             reduce using rule 25 (if_statement -> IF expression THEN statement .)
+    SEMICOLON       reduce using rule 25 (if_statement -> IF expression THEN statement .)
+    ELSE            shift and go to state 98
+
+  ! ELSE            [ reduce using rule 25 (if_statement -> IF expression THEN statement .) ]
+
+
+state 80
+
+    (34) expression -> expression PLUS expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    THEN            reduce using rule 34 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 34 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 34 (expression -> expression PLUS expression .)
+    EQUAL           reduce using rule 34 (expression -> expression PLUS expression .)
+    NOTEQ           reduce using rule 34 (expression -> expression PLUS expression .)
+    LESS            reduce using rule 34 (expression -> expression PLUS expression .)
+    LESSEQUAL       reduce using rule 34 (expression -> expression PLUS expression .)
+    GREATER         reduce using rule 34 (expression -> expression PLUS expression .)
+    GREATEREQUAL    reduce using rule 34 (expression -> expression PLUS expression .)
+    DO              reduce using rule 34 (expression -> expression PLUS expression .)
+    END             reduce using rule 34 (expression -> expression PLUS expression .)
+    SEMICOLON       reduce using rule 34 (expression -> expression PLUS expression .)
+    ELSE            reduce using rule 34 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 34 (expression -> expression PLUS expression .)
+    COMMA           reduce using rule 34 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+
+  ! TIMES           [ reduce using rule 34 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 34 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+  ! EQUAL           [ shift and go to state 61 ]
+  ! NOTEQ           [ shift and go to state 62 ]
+  ! LESS            [ shift and go to state 63 ]
+  ! LESSEQUAL       [ shift and go to state 64 ]
+  ! GREATER         [ shift and go to state 65 ]
+  ! GREATEREQUAL    [ shift and go to state 66 ]
+
+
+state 81
+
+    (35) expression -> expression MINUS expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    THEN            reduce using rule 35 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 35 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 35 (expression -> expression MINUS expression .)
+    EQUAL           reduce using rule 35 (expression -> expression MINUS expression .)
+    NOTEQ           reduce using rule 35 (expression -> expression MINUS expression .)
+    LESS            reduce using rule 35 (expression -> expression MINUS expression .)
+    LESSEQUAL       reduce using rule 35 (expression -> expression MINUS expression .)
+    GREATER         reduce using rule 35 (expression -> expression MINUS expression .)
+    GREATEREQUAL    reduce using rule 35 (expression -> expression MINUS expression .)
+    DO              reduce using rule 35 (expression -> expression MINUS expression .)
+    END             reduce using rule 35 (expression -> expression MINUS expression .)
+    SEMICOLON       reduce using rule 35 (expression -> expression MINUS expression .)
+    ELSE            reduce using rule 35 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 35 (expression -> expression MINUS expression .)
+    COMMA           reduce using rule 35 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+
+  ! TIMES           [ reduce using rule 35 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 35 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+  ! EQUAL           [ shift and go to state 61 ]
+  ! NOTEQ           [ shift and go to state 62 ]
+  ! LESS            [ shift and go to state 63 ]
+  ! LESSEQUAL       [ shift and go to state 64 ]
+  ! GREATER         [ shift and go to state 65 ]
+  ! GREATEREQUAL    [ shift and go to state 66 ]
+
+
+state 82
+
+    (36) expression -> expression TIMES expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    THEN            reduce using rule 36 (expression -> expression TIMES expression .)
+    PLUS            reduce using rule 36 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 36 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 36 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 36 (expression -> expression TIMES expression .)
+    EQUAL           reduce using rule 36 (expression -> expression TIMES expression .)
+    NOTEQ           reduce using rule 36 (expression -> expression TIMES expression .)
+    LESS            reduce using rule 36 (expression -> expression TIMES expression .)
+    LESSEQUAL       reduce using rule 36 (expression -> expression TIMES expression .)
+    GREATER         reduce using rule 36 (expression -> expression TIMES expression .)
+    GREATEREQUAL    reduce using rule 36 (expression -> expression TIMES expression .)
+    DO              reduce using rule 36 (expression -> expression TIMES expression .)
+    END             reduce using rule 36 (expression -> expression TIMES expression .)
+    SEMICOLON       reduce using rule 36 (expression -> expression TIMES expression .)
+    ELSE            reduce using rule 36 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 36 (expression -> expression TIMES expression .)
+    COMMA           reduce using rule 36 (expression -> expression TIMES expression .)
+
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+  ! TIMES           [ shift and go to state 59 ]
+  ! DIVIDE          [ shift and go to state 60 ]
+  ! EQUAL           [ shift and go to state 61 ]
+  ! NOTEQ           [ shift and go to state 62 ]
+  ! LESS            [ shift and go to state 63 ]
+  ! LESSEQUAL       [ shift and go to state 64 ]
+  ! GREATER         [ shift and go to state 65 ]
+  ! GREATEREQUAL    [ shift and go to state 66 ]
+
+
+state 83
+
+    (37) expression -> expression DIVIDE expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    THEN            reduce using rule 37 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 37 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 37 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 37 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 37 (expression -> expression DIVIDE expression .)
+    EQUAL           reduce using rule 37 (expression -> expression DIVIDE expression .)
+    NOTEQ           reduce using rule 37 (expression -> expression DIVIDE expression .)
+    LESS            reduce using rule 37 (expression -> expression DIVIDE expression .)
+    LESSEQUAL       reduce using rule 37 (expression -> expression DIVIDE expression .)
+    GREATER         reduce using rule 37 (expression -> expression DIVIDE expression .)
+    GREATEREQUAL    reduce using rule 37 (expression -> expression DIVIDE expression .)
+    DO              reduce using rule 37 (expression -> expression DIVIDE expression .)
+    END             reduce using rule 37 (expression -> expression DIVIDE expression .)
+    SEMICOLON       reduce using rule 37 (expression -> expression DIVIDE expression .)
+    ELSE            reduce using rule 37 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 37 (expression -> expression DIVIDE expression .)
+    COMMA           reduce using rule 37 (expression -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+  ! TIMES           [ shift and go to state 59 ]
+  ! DIVIDE          [ shift and go to state 60 ]
+  ! EQUAL           [ shift and go to state 61 ]
+  ! NOTEQ           [ shift and go to state 62 ]
+  ! LESS            [ shift and go to state 63 ]
+  ! LESSEQUAL       [ shift and go to state 64 ]
+  ! GREATER         [ shift and go to state 65 ]
+  ! GREATEREQUAL    [ shift and go to state 66 ]
+
+
+state 84
+
+    (38) expression -> expression EQUAL expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 38 (expression -> expression EQUAL expression .)
+    DO              reduce using rule 38 (expression -> expression EQUAL expression .)
+    END             reduce using rule 38 (expression -> expression EQUAL expression .)
+    SEMICOLON       reduce using rule 38 (expression -> expression EQUAL expression .)
+    ELSE            reduce using rule 38 (expression -> expression EQUAL expression .)
+    RPAREN          reduce using rule 38 (expression -> expression EQUAL expression .)
+    COMMA           reduce using rule 38 (expression -> expression EQUAL expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! MINUS           [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! TIMES           [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! NOTEQ           [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! LESS            [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! LESSEQUAL       [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! GREATER         [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 38 (expression -> expression EQUAL expression .) ]
+
+
+state 85
+
+    (39) expression -> expression NOTEQ expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 39 (expression -> expression NOTEQ expression .)
+    DO              reduce using rule 39 (expression -> expression NOTEQ expression .)
+    END             reduce using rule 39 (expression -> expression NOTEQ expression .)
+    SEMICOLON       reduce using rule 39 (expression -> expression NOTEQ expression .)
+    ELSE            reduce using rule 39 (expression -> expression NOTEQ expression .)
+    RPAREN          reduce using rule 39 (expression -> expression NOTEQ expression .)
+    COMMA           reduce using rule 39 (expression -> expression NOTEQ expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! MINUS           [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! TIMES           [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! DIVIDE          [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! EQUAL           [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! NOTEQ           [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! LESS            [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! LESSEQUAL       [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! GREATER         [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 39 (expression -> expression NOTEQ expression .) ]
+
+
+state 86
+
+    (40) expression -> expression LESS expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 40 (expression -> expression LESS expression .)
+    DO              reduce using rule 40 (expression -> expression LESS expression .)
+    END             reduce using rule 40 (expression -> expression LESS expression .)
+    SEMICOLON       reduce using rule 40 (expression -> expression LESS expression .)
+    ELSE            reduce using rule 40 (expression -> expression LESS expression .)
+    RPAREN          reduce using rule 40 (expression -> expression LESS expression .)
+    COMMA           reduce using rule 40 (expression -> expression LESS expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! MINUS           [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! TIMES           [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! DIVIDE          [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! EQUAL           [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! NOTEQ           [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! LESS            [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! LESSEQUAL       [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! GREATER         [ reduce using rule 40 (expression -> expression LESS expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 40 (expression -> expression LESS expression .) ]
+
+
+state 87
+
+    (41) expression -> expression LESSEQUAL expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    DO              reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    END             reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    SEMICOLON       reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    ELSE            reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    RPAREN          reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    COMMA           reduce using rule 41 (expression -> expression LESSEQUAL expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! MINUS           [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! TIMES           [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! NOTEQ           [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! LESS            [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! LESSEQUAL       [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! GREATER         [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 41 (expression -> expression LESSEQUAL expression .) ]
+
+
+state 88
+
+    (42) expression -> expression GREATER expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 42 (expression -> expression GREATER expression .)
+    DO              reduce using rule 42 (expression -> expression GREATER expression .)
+    END             reduce using rule 42 (expression -> expression GREATER expression .)
+    SEMICOLON       reduce using rule 42 (expression -> expression GREATER expression .)
+    ELSE            reduce using rule 42 (expression -> expression GREATER expression .)
+    RPAREN          reduce using rule 42 (expression -> expression GREATER expression .)
+    COMMA           reduce using rule 42 (expression -> expression GREATER expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! MINUS           [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! TIMES           [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! DIVIDE          [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! EQUAL           [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! NOTEQ           [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! LESS            [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! LESSEQUAL       [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! GREATER         [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 42 (expression -> expression GREATER expression .) ]
+
+
+state 89
+
+    (43) expression -> expression GREATEREQUAL expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOTEQ resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESSEQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATEREQUAL resolved as shift
+    THEN            reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    DO              reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    END             reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    SEMICOLON       reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    ELSE            reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    RPAREN          reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    COMMA           reduce using rule 43 (expression -> expression GREATEREQUAL expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+  ! PLUS            [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! MINUS           [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! TIMES           [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! EQUAL           [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! NOTEQ           [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! LESS            [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! LESSEQUAL       [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! GREATER         [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+  ! GREATEREQUAL    [ reduce using rule 43 (expression -> expression GREATEREQUAL expression .) ]
+
+
+state 90
+
+    (46) expression -> LPAREN expression RPAREN .
+
+    THEN            reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    EQUAL           reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    NOTEQ           reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    LESSEQUAL       reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    GREATEREQUAL    reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    DO              reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    END             reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    ELSE            reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 46 (expression -> LPAREN expression RPAREN .)
+
+
+state 91
+
+    (50) expression -> NEW LPAREN ID . RPAREN
+
+    RPAREN          shift and go to state 99
+
+
+state 92
+
+    (27) while_statement -> WHILE expression DO statement .
+
+    END             reduce using rule 27 (while_statement -> WHILE expression DO statement .)
+    SEMICOLON       reduce using rule 27 (while_statement -> WHILE expression DO statement .)
+    ELSE            reduce using rule 27 (while_statement -> WHILE expression DO statement .)
+
+
+state 93
+
+    (28) read_statement -> READ LPAREN id_list RPAREN .
+
+    END             reduce using rule 28 (read_statement -> READ LPAREN id_list RPAREN .)
+    SEMICOLON       reduce using rule 28 (read_statement -> READ LPAREN id_list RPAREN .)
+    ELSE            reduce using rule 28 (read_statement -> READ LPAREN id_list RPAREN .)
+
+
+state 94
+
+    (29) write_statement -> WRITE LPAREN expr_list RPAREN .
+
+    END             reduce using rule 29 (write_statement -> WRITE LPAREN expr_list RPAREN .)
+    SEMICOLON       reduce using rule 29 (write_statement -> WRITE LPAREN expr_list RPAREN .)
+    ELSE            reduce using rule 29 (write_statement -> WRITE LPAREN expr_list RPAREN .)
+
+
+state 95
+
+    (32) expr_list -> expr_list COMMA . expression
+    (34) expression -> . expression PLUS expression
+    (35) expression -> . expression MINUS expression
+    (36) expression -> . expression TIMES expression
+    (37) expression -> . expression DIVIDE expression
+    (38) expression -> . expression EQUAL expression
+    (39) expression -> . expression NOTEQ expression
+    (40) expression -> . expression LESS expression
+    (41) expression -> . expression LESSEQUAL expression
+    (42) expression -> . expression GREATER expression
+    (43) expression -> . expression GREATEREQUAL expression
+    (44) expression -> . MINUS expression
+    (45) expression -> . NOT expression
+    (46) expression -> . LPAREN expression RPAREN
+    (47) expression -> . ID
+    (48) expression -> . NUMBER
+    (49) expression -> . STRLIT
+    (50) expression -> . NEW LPAREN ID RPAREN
+
+    MINUS           shift and go to state 35
+    NOT             shift and go to state 36
+    LPAREN          shift and go to state 37
+    ID              shift and go to state 38
+    NUMBER          shift and go to state 39
+    STRLIT          shift and go to state 40
+    NEW             shift and go to state 41
+
+    expression                     shift and go to state 100
+
+state 96
+
+    (30) writeln_statement -> WRITELN LPAREN expr_list RPAREN .
+
+    END             reduce using rule 30 (writeln_statement -> WRITELN LPAREN expr_list RPAREN .)
+    SEMICOLON       reduce using rule 30 (writeln_statement -> WRITELN LPAREN expr_list RPAREN .)
+    ELSE            reduce using rule 30 (writeln_statement -> WRITELN LPAREN expr_list RPAREN .)
+
+
+state 97
+
+    (13) type -> ARRAY LBRACKET NUMBER . DOTDOT NUMBER RBRACKET OF type
+
+    DOTDOT          shift and go to state 101
+
+
+state 98
+
+    (26) if_statement -> IF expression THEN statement ELSE . statement
+    (18) statement -> . assignment
+    (19) statement -> . if_statement
+    (20) statement -> . while_statement
+    (21) statement -> . read_statement
+    (22) statement -> . write_statement
+    (23) statement -> . writeln_statement
+    (24) assignment -> . ID ASSIGN expression
+    (25) if_statement -> . IF expression THEN statement
+    (26) if_statement -> . IF expression THEN statement ELSE statement
+    (27) while_statement -> . WHILE expression DO statement
+    (28) read_statement -> . READ LPAREN id_list RPAREN
+    (29) write_statement -> . WRITE LPAREN expr_list RPAREN
+    (30) writeln_statement -> . WRITELN LPAREN expr_list RPAREN
+    (31) writeln_statement -> . WRITELN LPAREN RPAREN
+
+    ID              shift and go to state 13
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
+    READ            shift and go to state 25
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 27
+
+    statement                      shift and go to state 102
+    assignment                     shift and go to state 17
+    if_statement                   shift and go to state 18
+    while_statement                shift and go to state 19
+    read_statement                 shift and go to state 20
+    write_statement                shift and go to state 21
+    writeln_statement              shift and go to state 22
+
+state 99
+
+    (50) expression -> NEW LPAREN ID RPAREN .
+
+    THEN            reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    PLUS            reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    MINUS           reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    TIMES           reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    DIVIDE          reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    EQUAL           reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    NOTEQ           reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    LESS            reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    LESSEQUAL       reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    GREATER         reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    GREATEREQUAL    reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    DO              reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    END             reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    SEMICOLON       reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    ELSE            reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    RPAREN          reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+    COMMA           reduce using rule 50 (expression -> NEW LPAREN ID RPAREN .)
+
+
+state 100
+
+    (32) expr_list -> expr_list COMMA expression .
+    (34) expression -> expression . PLUS expression
+    (35) expression -> expression . MINUS expression
+    (36) expression -> expression . TIMES expression
+    (37) expression -> expression . DIVIDE expression
+    (38) expression -> expression . EQUAL expression
+    (39) expression -> expression . NOTEQ expression
+    (40) expression -> expression . LESS expression
+    (41) expression -> expression . LESSEQUAL expression
+    (42) expression -> expression . GREATER expression
+    (43) expression -> expression . GREATEREQUAL expression
+
+    RPAREN          reduce using rule 32 (expr_list -> expr_list COMMA expression .)
+    COMMA           reduce using rule 32 (expr_list -> expr_list COMMA expression .)
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+    TIMES           shift and go to state 59
+    DIVIDE          shift and go to state 60
+    EQUAL           shift and go to state 61
+    NOTEQ           shift and go to state 62
+    LESS            shift and go to state 63
+    LESSEQUAL       shift and go to state 64
+    GREATER         shift and go to state 65
+    GREATEREQUAL    shift and go to state 66
+
+
+state 101
+
+    (13) type -> ARRAY LBRACKET NUMBER DOTDOT . NUMBER RBRACKET OF type
+
+    NUMBER          shift and go to state 103
+
+
+state 102
+
+    (26) if_statement -> IF expression THEN statement ELSE statement .
+
+    END             reduce using rule 26 (if_statement -> IF expression THEN statement ELSE statement .)
+    SEMICOLON       reduce using rule 26 (if_statement -> IF expression THEN statement ELSE statement .)
+    ELSE            reduce using rule 26 (if_statement -> IF expression THEN statement ELSE statement .)
+
+
+state 103
+
+    (13) type -> ARRAY LBRACKET NUMBER DOTDOT NUMBER . RBRACKET OF type
+
+    RBRACKET        shift and go to state 104
+
+
+state 104
+
+    (13) type -> ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET . OF type
+
+    OF              shift and go to state 105
+
+
+state 105
+
+    (13) type -> ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF . type
+    (9) type -> . INTEGER
+    (10) type -> . REAL
+    (11) type -> . BOOLEAN
+    (12) type -> . STRING
+    (13) type -> . ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF type
+
+    INTEGER         shift and go to state 47
+    REAL            shift and go to state 48
+    BOOLEAN         shift and go to state 49
+    STRING          shift and go to state 50
+    ARRAY           shift and go to state 51
+
+    type                           shift and go to state 106
+
+state 106
+
+    (13) type -> ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF type .
+
+    SEMICOLON       reduce using rule 13 (type -> ARRAY LBRACKET NUMBER DOTDOT NUMBER RBRACKET OF type .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 68 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 68 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 68 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 68 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 68 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 68 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 68 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 79 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 84 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 84 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 84 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 84 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 84 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 84 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 84 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 84 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 84 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 84 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 85 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 85 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 85 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 85 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 85 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 85 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 85 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 85 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 85 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 85 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 86 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 86 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 86 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 86 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 86 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 86 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 86 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 86 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 86 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 86 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 87 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 87 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 87 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 87 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 87 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 87 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 87 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 87 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 87 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 87 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 88 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 88 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 88 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 88 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 88 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 88 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 88 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 88 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 88 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 88 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 89 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 89 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 89 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 89 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 89 resolved as shift
+WARNING: shift/reduce conflict for NOTEQ in state 89 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 89 resolved as shift
+WARNING: shift/reduce conflict for LESSEQUAL in state 89 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 89 resolved as shift
+WARNING: shift/reduce conflict for GREATEREQUAL in state 89 resolved as shift

@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDErightUMINUSDIVIDE LPAREN MINUS NUMBER PLUS RPAREN TIMESexpression : expression PLUS expression\n                  | expression MINUS expression\n                  | expression TIMES expression\n                  | expression DIVIDE expressionexpression : MINUS expression %prec UMINUSexpression : LPAREN expression RPARENexpression : NUMBER'
+_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDErightUMINUSDIVIDE LPAREN MINUS NUMBER PLUS RPAREN TIMESexpression : expression PLUS expression\n| expression MINUS expression\n| expression TIMES expression\n| expression DIVIDE expressionexpression : MINUS expression %prec UMINUSexpression : LPAREN expression RPARENexpression : NUMBER'
     
 _lr_action_items = {'MINUS':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,],[2,6,2,2,-7,2,2,2,2,-5,6,-1,-2,-3,-4,-6,]),'LPAREN':([0,2,3,5,6,7,8,],[3,3,3,3,3,3,3,]),'NUMBER':([0,2,3,5,6,7,8,],[4,4,4,4,4,4,4,]),'$end':([1,4,9,11,12,13,14,15,],[0,-7,-5,-1,-2,-3,-4,-6,]),'PLUS':([1,4,9,10,11,12,13,14,15,],[5,-7,-5,5,-1,-2,-3,-4,-6,]),'TIMES':([1,4,9,10,11,12,13,14,15,],[7,-7,-5,7,7,7,-3,-4,-6,]),'DIVIDE':([1,4,9,10,11,12,13,14,15,],[8,-7,-5,8,8,8,-3,-4,-6,]),'RPAREN':([4,9,10,11,12,13,14,15,],[-7,-5,15,-1,-2,-3,-4,-6,]),}
 

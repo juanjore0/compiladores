@@ -45,7 +45,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         fin = sys.argv[1]
     else:
-        fin = 'evaluacion.txt'
+        fin = 'Calculadora\\evaluacion.txt'
 
     try:
         with open(fin, 'r') as f:
