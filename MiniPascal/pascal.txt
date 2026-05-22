@@ -1,0 +1,45 @@
+program TestErroresSemanticos;
+
+var
+    X, Y : integer;
+    R : real;
+    B : boolean;
+    X : real; 
+
+procedure MiProcedimiento;
+var
+    X : integer; 
+    Z : boolean;
+begin
+    Z := true;
+    X := 10;
+    W := 5; 
+end;
+
+function CalcularSuma : integer;
+begin
+    CalcularSuma := X + 5;
+end;
+
+begin
+    X := 5;
+    Y := 10;
+    B := false;
+
+    Y := B; 
+
+    R := X; 
+
+    R := R + B; 
+
+    B := not Y; 
+
+    while R do
+    begin
+        X := X + 1
+    end;
+
+    Y; 
+
+    MiProcedimiento;
+end.

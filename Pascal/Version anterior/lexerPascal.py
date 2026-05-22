@@ -3,7 +3,7 @@ import ply.lex as lex
 tokens = (
 
     # --- Palabras Reservadas ---
-    'PROGRAM', 'USES', 'VAR', 'BEGIN', 'END', 'IF', 'THEN', 'ELSE', 
+    'PROGRAM', 'VAR', 'BEGIN', 'END', 'IF', 'THEN', 'ELSE', 
     'WHILE', 'DO', 'INTEGER', 'REAL', 'BOOLEAN', 'READ', 'WRITE', 
     'STRING', 'WRITELN', 'ARRAY', 'OF', 'NEW', 'NOT',
 
@@ -22,7 +22,7 @@ tokens = (
 )
 
 reservadas = {
-    'program': 'PROGRAM', 'uses': 'USES', 'var': 'VAR', 'begin': 'BEGIN', 'end': 'END',
+    'program': 'PROGRAM', 'var': 'VAR', 'begin': 'BEGIN', 'end': 'END',
     'if': 'IF', 'then': 'THEN', 'else': 'ELSE', 'while': 'WHILE', 'do': 'DO',
     'integer': 'INTEGER', 'real': 'REAL', 'boolean': 'BOOLEAN', 'string': 'STRING',
     'read': 'READ', 'write': 'WRITE', 'writeln': 'WRITELN',
@@ -119,3 +119,19 @@ def t_error(t):
     t.lexer.skip(1)
 
 lexer = lex.lex()
+
+with open('Pascal\\pascal.txt', 'r') as file:
+        data = file.read()
+        
+print("----- Código Fuente Leído -----")
+print(data)
+
+print("\n----- Tokens Generados -----")
+
+lexer.input(data)
+
+while True:
+    token = lexer.token()
+    if not token:
+        break     
+    print(token)
