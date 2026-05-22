@@ -5,6 +5,7 @@ from semanticPascal import (
     NodoOperacionBinaria, NodoOperacionUnaria, NodoVariable, NodoLiteral,
     NodoCondicionalIf, NodoBucleWhile, NodoLectura, NodoEscritura,
     NodoProcedimiento, NodoFuncion, NodoLlamadaSubprograma,
+    NodoDeclaracionConstante
 )
 
 estado_analisis = {'hubo_error': False, 'registro_errores': []}
@@ -18,8 +19,9 @@ precedence = (
 # ── Programa principal ────────────────────────────────────────────────────────
 
 def p_program(p):
-    '''program : PROGRAM ID SEMICOLON uses_section var_section subprogram_section BEGIN statements END DOT'''
-    p[0] = NodoPrograma(p[2], p[5], p[6], p[8], p.lineno(1))
+    '''program : PROGRAM ID SEMICOLON uses_section const_section var_section subprogram_section BEGIN statements END DOT'''
+    p[0] = NodoPrograma(p[2], p[6], p[7], p[9], p.lineno(1)) 
+    p[0].declaraciones_constantes = p[5]
 
 # ── Sección uses ──────────────────────────────────────────────────────────────
 
@@ -81,13 +83,15 @@ def p_subprogram_decl(p):
 
 # procedure NombreProc ; [var …] begin … end ;
 def p_procedure_decl(p):
-    '''procedure_decl : PROCEDURE ID SEMICOLON var_section BEGIN statements END SEMICOLON'''
-    p[0] = NodoProcedimiento(p[2], p[4], p[6], p.lineno(1))
+    '''procedure_decl : PROCEDURE ID SEMICOLON const_section var_section BEGIN statements END SEMICOLON'''
+    p[0] = NodoProcedimiento(p[2], p[5], p[7], p.lineno(1))
+    p[0].declaraciones_constantes = p[4]
 
 # function NombreFunc : TipoRetorno ; [var …] begin … end ;
 def p_function_decl(p):
-    '''function_decl : FUNCTION ID COLON type SEMICOLON var_section BEGIN statements END SEMICOLON'''
-    p[0] = NodoFuncion(p[2], p[4], p[6], p[8], p.lineno(1))
+    '''function_decl : FUNCTION ID COLON type SEMICOLON const_section var_section BEGIN statements END SEMICOLON'''
+    p[0] = NodoFuncion(p[2], p[4], p[7], p[9], p.lineno(1))
+    p[0].declaraciones_constantes = p[6]
 
 # ── Sentencias ────────────────────────────────────────────────────────────────
 
@@ -215,6 +219,20 @@ def p_expression_boolean(p):
 def p_empty(p):
     '''empty :'''
     pass
+
+def p_const_section(p):
+    '''const_section : CONST const_declarations
+                     | empty'''
+    p[0] = p[2] if len(p) == 3 else []
+
+def p_const_declarations(p):
+    '''const_declarations : const_declarations const_decl
+                          | const_decl'''
+    p[0] = p[1] + [p[2]] if len(p) == 3 else [p[1]]
+
+def p_const_decl(p):
+    '''const_decl : ID EQUAL expression SEMICOLON'''
+    p[0] = NodoDeclaracionConstante(p[1], p[3], p.lineno(2))
 
 # ── Manejo de errores ─────────────────────────────────────────────────────────
 

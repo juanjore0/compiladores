@@ -73,6 +73,12 @@ class NodoAsignacion(NodoAST):
         self.nombre_variable = nombre_variable
         self.expresion = expresion
 
+class NodoDeclaracionConstante(NodoAST):
+    def __init__(self, nombre, expresion, linea):
+        super().__init__(linea)
+        self.nombre = nombre
+        self.expresion = expresion
+
 class NodoOperacionBinaria(NodoAST):
     def __init__(self, operando_izquierdo, operador, operando_derecho, linea):
         super().__init__(linea)
@@ -128,13 +134,19 @@ class TablaDeSimbolos:
         self.ambito_padre  = ambito_padre
         self.nombre_ambito = nombre_ambito
 
-    def registrar_variable(self, nombre, tipo_simbolo, linea):
+    def registrar_variable(self, nombre, tipo_simbolo, linea, es_constante=False):
         clave = nombre.lower()
         if clave in self.simbolos:
             raise ErrorSemantico(
-                f"Línea {linea}: Variable '{nombre}' ya declarada en ámbito '{self.nombre_ambito}'."
+                f"Línea {linea}: Identificador '{nombre}' ya declarado en ámbito '{self.nombre_ambito}'."
             )
-        self.simbolos[clave] = {'tipo': tipo_simbolo.upper(), 'linea': linea, 'valor': None}
+        # Añadimos 'es_constante' al diccionario interno del símbolo
+        self.simbolos[clave] = {
+            'tipo': tipo_simbolo.upper(), 
+            'linea': linea, 
+            'valor': None, 
+            'es_constante': es_constante
+        }
         self.historial[clave] = [{'valor': None, 'linea': linea}]
 
     def actualizar_valor(self, nombre, valor, linea):
@@ -201,6 +213,8 @@ class TablaDeSimbolos:
                 print(f"  {nombre:<18} | {info['tipo']:<12} | {val:<25} | {entrada['linea']}")
             print("  " + "-" * 71)
 
+
+
 class AnalizadorSemantico:
     def __init__(self, modo_traza=False):
         self.tabla_global     = TablaDeSimbolos(nombre_ambito="Global")
@@ -230,6 +244,20 @@ class AnalizadorSemantico:
         for tabla in self._tablas_locales:
             tabla.imprimir_historial()
 
+    def visitar_NodoDeclaracionConstante(self, nodo):
+        res = self.visitar(nodo.expresion)
+        if res is None:
+            return
+        val_const, tipo_const = res
+        
+        try:
+            # Registramos en la tabla marcando es_constante=True
+            self.tabla_actual.registrar_variable(nodo.nombre, tipo_const, nodo.linea, es_constante=True)
+            self.tabla_actual.actualizar_valor(nodo.nombre, val_const, nodo.linea)
+            self.trazar(f"Constante Declarada '{nodo.nombre}' : {tipo_const} = {val_const} (Línea {nodo.linea})")
+        except ErrorSemantico as e:
+            self.registrar_error(str(e))
+
     def visitar(self, nodo):
         if nodo is None:
             return None
@@ -257,6 +285,8 @@ class AnalizadorSemantico:
 
     def visitar_NodoPrograma(self, nodo):
         self.trazar(f"Programa: '{nodo.nombre}'")
+        if hasattr(nodo, 'declaraciones_constantes'):
+            self.visitar(nodo.declaraciones_constantes)
         self.visitar(nodo.declaraciones_variables)
         self.visitar(nodo.subprogramas)
         self.visitar(nodo.sentencias)
@@ -267,6 +297,10 @@ class AnalizadorSemantico:
         except ErrorSemantico as e:
             self.registrar_error(str(e))
         self._entrar_ambito(f"procedure {nodo.nombre}")
+
+        if hasattr(nodo, 'declaraciones_constantes'):
+            self.visitar(nodo.declaraciones_constantes)
+
         self.visitar(nodo.declaraciones_locales)
         self.visitar(nodo.sentencias)
         self._salir_ambito()
@@ -282,6 +316,10 @@ class AnalizadorSemantico:
             self.tabla_actual.registrar_variable(nodo.nombre, nodo.tipo_retorno.upper(), nodo.linea)
         except ErrorSemantico:
             pass
+        
+        if hasattr(nodo, 'declaraciones_constantes'):
+            self.visitar(nodo.declaraciones_constantes)
+            
         self.visitar(nodo.declaraciones_locales)
         self.visitar(nodo.sentencias)
         self._salir_ambito()
@@ -304,6 +342,12 @@ class AnalizadorSemantico:
         if not info:
             self.registrar_error(
                 f"Línea {nodo.linea}: Variable '{nodo.nombre_variable}' no declarada."
+            )
+            return
+        
+        if info.get('es_constante', False):
+            self.registrar_error(
+                f"Línea {nodo.linea}: Error semántico — No se puede modificar el valor de la constante '{nodo.nombre_variable}'."
             )
             return
 
@@ -411,8 +455,13 @@ class AnalizadorSemantico:
 
     def visitar_NodoLectura(self, nodo):
         for nombre in nodo.nombres_variables:
-            if not self.tabla_actual.buscar_variable(nombre):
+            info = self.tabla_actual.buscar_variable(nombre)
+            if not info:
                 self.registrar_error(f"Línea {nodo.linea}: Variable '{nombre}' no declarada en READ.")
+            elif info.get('es_constante', False):
+                self.registrar_error(
+                    f"Línea {nodo.linea}: Error semántico — No se puede pasar la constante '{nombre}' como argumento de lectura READ."
+                )
 
     def visitar_NodoEscritura(self, nodo):
         self.visitar(nodo.lista_expresiones)

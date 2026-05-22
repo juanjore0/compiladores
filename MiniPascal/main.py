@@ -53,4 +53,4 @@ def inicializar_compilador(ruta_codigo_fuente):
     print("=" * 75 + "\n")
 
 
-inicializar_compilador('pascal.txt')
+inicializar_compilador('MiniPascal\\pascal.txt')

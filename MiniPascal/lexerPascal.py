@@ -1,7 +1,7 @@
 import ply.lex as lex
 
 tokens = (
-    'PROGRAM', 'USES', 'VAR', 'PROCEDURE', 'FUNCTION', 'BEGIN', 'END',
+    'PROGRAM', 'USES', 'VAR', 'PROCEDURE', 'FUNCTION', 'BEGIN', 'END', 'CONST',
     'IF', 'THEN', 'ELSE', 'WHILE', 'DO',
     'INTEGER', 'REAL', 'BOOLEAN', 'READ', 'WRITE', 'STRING', 'WRITELN',
     'ARRAY', 'OF', 'NEW', 'NOT', 'TRUE', 'FALSE',
@@ -18,6 +18,7 @@ reservadas = {
     'uses'     : 'USES',
     'var'      : 'VAR',
     'procedure': 'PROCEDURE',
+    'const'    : 'CONST',
     'function' : 'FUNCTION',
     'begin'    : 'BEGIN',
     'end'      : 'END',

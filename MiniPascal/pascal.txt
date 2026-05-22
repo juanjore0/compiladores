@@ -1,5 +1,8 @@
 program TestErroresSemanticos;
 
+const
+  PI = 3.123;
+
 var
     X, Y : integer;
     R : real;
@@ -39,7 +42,9 @@ begin
         X := X + 1
     end;
 
-    Y; 
+    Y;
+
+    PI := 98.54;
 
     MiProcedimiento;
 end.
